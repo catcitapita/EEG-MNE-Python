@@ -1,6 +1,9 @@
 import mne
 import pandas as pd ## use pandas to read the csv file
 import numpy as np ## use numpy to convert the data into a numpy array
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
 
 
 
@@ -59,18 +62,32 @@ loaded_data = load_data()
 numpy_data = convert_to_numpy_array(loaded_data)
 mne_data = convert_to_mne_raw_array(loaded_data)
 
-def plot_psd_and_raw(mne_data): 
-    mne_data.compute_psd(fmin=0, fmax=64).plot(picks="data", amplitude=False)
-    mne_data.plot(duration=5, n_channels=18, block=True)
-
-# data_plot = plot_psd_and_raw(mne_data)
 
 def preprocess_data(mne_data):
+
+    # Filter the data to remove noise and artifacts
     mne_data.filter(l_freq=1.0, h_freq=50.0)
-    mne_data.compute_psd(fmin=0, fmax=64).plot(picks="eeg", amplitude=False)
+
+    # Remove EEG prefix from channel names and set montage
+    mne_data.rename_channels(lambda x: x.replace("EEG.", ""))
+    montage = mne.channels.make_standard_montage("standard_1020") 
+    mne_data.set_montage(montage)
+
+    # Compute and plot the power spectral density (PSD) for each channel
+    spect = mne_data.compute_psd(picks="eeg", fmin=0, fmax=64)
+    spect_data = mne_data.info['ch_names']
+
+    custom_colors = [
+    "red", "blue", "green", "orange",
+    "purple", "pink", "brown", "cyan",
+    "magenta", "yellow", "black", "gray",
+    "olive", "navy"
+    ]
+  
+    spect.plot(picks=spect_data, color=custom_colors)
     
-    mne_data.plot(scalings={"eeg": 200e-6},block=True)
+    mne_data.plot(scalings={"eeg": 200e-6},block=True, color="purple")
+
 
 data_plot_filtered = preprocess_data(mne_data)
-
 
