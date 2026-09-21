@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 
 
 
-
 ###############################
 ## Authored by Catherine Head.
 ##
