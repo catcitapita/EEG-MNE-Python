@@ -90,3 +90,12 @@ def preprocess_data(mne_data):
 
 data_plot_filtered = preprocess_data(mne_data)
 
+
+
+
+
+
+# CITATION:
+# A. Rashed, S. Shirmohammadi and M. Hefeeda, 
+# "Descriptor: Multimodal Dataset for Player Engagement Analysis in Video Games (MultiPENG)," 
+# in IEEE Data Descriptions, vol. 2, pp. 17-25, 2025, doi: 10.1109/IEEEDATA.2025.3553097.
