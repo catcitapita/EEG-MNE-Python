@@ -101,8 +101,6 @@ def main():
             pt_idx += 1
             if(pt_idx >= PARTICIPANT_COUNT):
                 break
-        
-    print(f"{len(df_list)} frames found")
 
     # Create total concated DataFrame of all participants files.
     print("Processing")
