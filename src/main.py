@@ -13,10 +13,8 @@ from pathlib import Path
 ## 
 ###############################
 
-## Constants
 DEFAULT_DIRECTORY = "/Users/catcitapita/Documents/Multimodal Video Game Data/archive/Samples/"
 OUTPUT_DIR = ".vscode/output/"
-PARTICIPANT_COUNT = -1
 
 eeg_channels = [
     "EEG.AF3", "EEG.F7", "EEG.F3", "EEG.FC5", "EEG.T7", "EEG.P7", "EEG.O1", 
@@ -81,12 +79,11 @@ def main():
     dir_path = Path(DEFAULT_DIRECTORY)
     df_list : list[pd.DataFrame] = []
 
-    print("Collecting")
+    print("Collecting participant data")
     # Get a complete DataFrame for each individual and add to list.
     pt_idx = 0
     for participant in dir_path.iterdir():
         if not participant.is_dir():
-            print(f"Missing Directory: {participant}")
             continue
         
         _p_df = load_data(participant)
@@ -96,11 +93,6 @@ def main():
             continue
 
         df_list.append(_p_df)
-
-        if(PARTICIPANT_COUNT > 0):
-            pt_idx += 1
-            if(pt_idx >= PARTICIPANT_COUNT):
-                break
 
     # Create total concated DataFrame of all participants files.
     print("Processing")
